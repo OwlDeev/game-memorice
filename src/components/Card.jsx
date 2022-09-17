@@ -4,17 +4,39 @@ import CardMedia from "@mui/material/CardMedia";
 import "./card.css";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
-
-export default function BasicCard({ info }) {
+import { useEffect } from "react";
+let cardSelectPaso = "";
+let selectTwoCard = 0;
+export default function BasicCard({
+  info,
+  cardsGame,
+  setCards,
+  cardSelect,
+  setCardSelect,
+}) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => {
     setIsFlipped(!isFlipped);
+    selectTwoCard++;
+    setCardSelect(info.index);
   };
+
+  useEffect(() => {
+    if (cardSelect !== "" && cardSelectPaso === "") {
+      cardSelectPaso = info.index;selectTwoCard
+    } else {
+      if (cardSelectPaso === info.index && selectTwoCard === 2) {
+        console.log("ganaste un punto");
+        selectTwoCard = 0;
+      }
+    }
+  }, [cardSelect]);
+
   var fondo = info.src;
   var fondoInicial =
     "https://i.pinimg.com/originals/eb/11/88/eb1188ba73a37bfbd8dd50d92e89324a.gif";
-    
+
   return (
     <ReactCardFlip
       key={info.index}

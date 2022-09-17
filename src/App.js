@@ -6,8 +6,17 @@ import { Cards } from "./Cards";
 import { useState } from "react";
 
 export default function App() {
-  let allCards = Cards.concat(Cards);
-  allCards = allCards.sort(function () {
+  let allCards = Cards;
+  let allCardTwo = [];
+  let allCardFinal = [];
+  let contador = allCards.length;
+  for (const card of Cards) {
+    contador++;
+    let index = {index: contador, src: card.src};
+    allCardTwo.push(index)
+  }
+  allCardFinal = allCards.concat(allCardTwo)
+  allCards = allCardFinal.sort(function () {
     return Math.random() - 0.5;
   });
   const [cardsState, setCards] = useState(allCards);
@@ -15,7 +24,7 @@ export default function App() {
   return (
     <Box className="mainApp">
       <Box>
-        <Board Cards={cardsState}></Board>
+        <Board Cards={cardsState} setCards={setCards}></Board>
       </Box>
     </Box>
   );
